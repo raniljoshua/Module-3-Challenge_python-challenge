@@ -5,6 +5,7 @@ import os
 import csv
 
 total_votes = 0
+#Dictionary for Candidates "Name", Total "Votes", and "Percent Votes"
 candidate = {
     "Name":[],
     "Votes":[],
@@ -25,17 +26,19 @@ with open(csvpath, encoding='UTF-8') as csvfile:
 
     for row in csvreader:
         total_votes += 1
-        #If we encounter the new candidate name
+        #If we encounter an existing candidate "Name", increment the corresponding "Votes" by 1
         if row[2] in candidate["Name"]:
             candidate["Votes"][candidate["Name"].index(row[2])] += 1
+        #Else, add the new candidate "Name" and 1 "Vote" to the dictionary
         else:
             candidate["Name"].append(row[2])
             candidate["Votes"].append(int(1))
 
-
+#Calculate and add "Percent Votes" to the dictionary for each candidate
 for x in candidate["Votes"]:
     candidate["Percent Votes"].append(round((x/total_votes*100),3))
 
+#Calculate winner based on most votes
 winner = candidate["Name"][candidate["Votes"].index(max(candidate["Votes"]))]
 
 # print(total_votes)
